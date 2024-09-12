@@ -2,3 +2,5 @@ name: ExerciceEndmc
 version: 1.0
 author: Kairo
 main: me.kairomc.architecture.ExercisePlugin
+commands:
+  player:

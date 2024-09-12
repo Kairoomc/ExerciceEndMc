@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
+import java.sql.SQLException;
 
 public class PlayerCommand implements CommandExecutor {
 
@@ -21,8 +22,14 @@ public class PlayerCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            String playerInfo = playerService.getPlayerInfo(player);
-            player.sendMessage(playerInfo);
+            try {
+                playerService.createPlayerProfile(player);
+                String playerInfo = player.getName() + " a " + playerService.getPlayerMoney(player) + " pièces d'or.";
+                player.sendMessage(playerInfo);
+            } catch (SQLException e) {
+                player.sendMessage("Erreur lors de la récupération des données du joueur !");
+                e.printStackTrace();
+            }
         }
         return true;
     }
