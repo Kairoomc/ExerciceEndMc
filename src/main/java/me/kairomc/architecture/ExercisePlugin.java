@@ -15,5 +15,7 @@ public class ExercisePlugin extends JavaPlugin {
         Injector injector = Guice.createInjector(exerciseModule);
 
         injector.getInstance(CommandInitializer.class).registerCommands();
+
+
     }
 }

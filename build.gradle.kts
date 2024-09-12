@@ -22,7 +22,8 @@ repositories {
 
 dependencies {
     implementation("com.google.inject:guice:4.0")
-
+    implementation("mysql:mysql-connector-java:8.0.28")
+    implementation("com.zaxxer:HikariCP:2.3.2")
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     compileOnly("org.projectlombok:lombok:1.18.34")
 

@@ -10,8 +10,8 @@ public class DatabaseService {
 
     private final Connection connection;
 
-    public DatabaseService(Connection connection) {
-        this.connection = connection;
+    public DatabaseService(DatabaseConnectionManager connectionManager) throws SQLException {
+        this.connection = connectionManager.getConnection(); // Connexion créée ici
     }
 
     public int getPlayerMoney(UUID playerUUID) throws SQLException {
