@@ -1,5 +1,11 @@
 package me.kairomc.architecture.service;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import io.github.cdimascio.dotenv.Dotenv;
+import me.kairomc.architecture.utils.DotenvUtil;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,32 +14,24 @@ import java.util.UUID;
 
 public class DatabaseService {
 
-    private final Connection connection;
+    private final String url = DotenvUtil.get("DB_URL");
+    private final String user = DotenvUtil.get("DB_USER");
+    private final String password = DotenvUtil.get("DB_PASSWORD");
+    private final DataSource dataSource;
 
-    public DatabaseService(DatabaseConnectionManager connectionManager) throws SQLException {
-        this.connection = connectionManager.getConnection(); // Connexion créée ici
+    public DatabaseService() {
+
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(url);
+        config.setUsername(user);
+        config.setPassword(password);
+        config.setMaximumPoolSize(10);
+        config.setConnectionTimeout(30000);
+
+        this.dataSource = new HikariDataSource(config);
     }
 
-    public int getPlayerMoney(UUID playerUUID) throws SQLException {
-        String query = "SELECT money FROM players WHERE uuid = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, playerUUID.toString());
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("money");
-            } else {
-                return 0;
-            }
-        }
-    }
-
-    public void setPlayerMoney(UUID playerUUID, int money) throws SQLException {
-        String query = "INSERT INTO players (uuid, money) VALUES (?, ?) ON DUPLICATE KEY UPDATE money = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, playerUUID.toString());
-            stmt.setInt(2, money);
-            stmt.setInt(3, money);
-            stmt.executeUpdate();
-        }
+    public Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }
 }
