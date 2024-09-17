@@ -1,4 +1,4 @@
-package me.kairomc.architecture.utils;
+package me.kairomc.architecture.model;
 
 import java.util.UUID;
 
