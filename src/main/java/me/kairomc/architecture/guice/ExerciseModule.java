@@ -1,7 +1,6 @@
 package me.kairomc.architecture.guice;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import me.kairomc.architecture.ExercisePlugin;
 import me.kairomc.architecture.service.DatabaseService;
@@ -18,7 +17,8 @@ public class ExerciseModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(ExercisePlugin.class).toInstance(exercisePlugin);
-        bind(PlayerService.class).in(Singleton.class);
-        bind(DatabaseService.class).in(Singleton.class);
+
+        bind(PlayerService.class);
+        bind(DatabaseService.class);
     }
 }

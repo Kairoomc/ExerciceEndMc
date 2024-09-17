@@ -2,12 +2,12 @@ package me.kairomc.architecture.utils;
 
 import java.util.UUID;
 
-public class PlayerUtils {
+public class PlayerData {
     private final UUID uuid;
     private final String name;
     private int money;
 
-    public PlayerUtils(UUID uuid, String name, int money) {
+    public PlayerData(UUID uuid, String name, int money) {
         this.uuid = uuid;
         this.name = name;
         this.money = money;

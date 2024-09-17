@@ -18,6 +18,8 @@ public class PlayerCommand implements CommandExecutor {
         this.playerService = playerService;
     }
 
+    
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
